@@ -1,0 +1,89 @@
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block content %}
+{%include "header.html" %}
+<!-- Page Header -->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/4.jpg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="page-heading">
+          <h1>Reservation</h1>
+          <span class="subheading">Welcome!</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container position-relative px-4 px-lg-5"></div>
+  <div class="row">
+    <div class="col-sm-12 ">
+
+      <h1>Reservation Status</h1>
+      {%if status == "1" %}
+      <h1 style="color: aqua;">Reservation is Open</h1>
+      {%else %}
+      <h1 style="color: red;">Reservation is Closed</h1>
+      {%endif%}
+
+      {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-16 ">
+      <h1>All Reservations</h1> 
+        <table class="table table-light table-striped table-hover">
+          <!-- This is where you will write the code to render a Bootstrap 
+          Table that contains all the information from the 
+          cafe-data.csv file. -->
+              <tr>
+                  
+                  <th scope="col">Name</th>
+                  <th scope="col">Phone No.</th>
+                  <th scope="col">Room Selected</th>
+                  <th scope="col">Reservation Starts At</th>
+                  <th scope="col">Reservation Ends at</th>
+                  <th scope="col">Reservation date</th>
+                  <th scope="col">Season</th>
+                
+              </tr>
+              <tbody>
+                
+                  {%for reservation in all_reservations %}
+                  <tr>
+                  <!-- <th scope="row"></th> -->
+                  <td>{{reservation.name}}</td>
+                  <td>0{{ reservation.phone }}</td>
+                  <td>{{ reservation.room }}</td>
+                  <td>{{ reservation.from_date }}</td>
+                  <td>{{ reservation.to_date }}</td>
+                  <td>{{ reservation.date }}</td>
+                  <td>{{ reservation.season }}</td>
+
+                  </tr>
+                  {%endfor%}
+              </tbody>
+
+        </table>   
+
+
+	 
+   
+      <p><a href=" {{ url_for('get_all_posts') }} ">Return to index page</a></p>
+
+    </div>
+  </div>
+</div>
+
+
+{% include "footer.html" %} 
+
+{% endblock %}

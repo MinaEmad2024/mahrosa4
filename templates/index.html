@@ -1,0 +1,122 @@
+{% include "header.html" %}
+
+<!-- Page Header-->
+<header
+  class="masthead"
+  style="background-image: url('../static/assets/img/home.jpeg')"
+>
+  <div class="container position-relative px-4 px-lg-5">
+    <div class="row gx-4 gx-lg-5 justify-content-center">
+      <div class="col-md-10 col-lg-8 col-xl-7">
+        <div class="site-heading">
+          <h1>دير الشهيدالعظيم مار جرجس بالمحروسة </h1>
+          <span class="subheading">يرحب بكم </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<!-- Main Content-->
+<!-- <div class="container px-4 px-lg-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-md-10 col-lg-8 col-xl-7">
+      <p>yyyyyyyyyyyyyyyyyyyrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr</p>
+    </div>
+  </div>
+</div> -->
+
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row flex-lg-row-reverse align-items-center g-5 py-5">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <img src="../static/assets/img/home1.jpg" class="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy">
+    </div>
+    <div class="col-lg-6">
+      <h1 class="display-5 fw-bold text-body-emphasis lh-1 mb-3">بصلاة الحبر الجليل الانبا شاروبيم مطران قنا و توابعها</h1>
+      <p class="lead">يسر الدير بان يقدم لزوارة الكرام خدمة الحجز الالكتروني لزوارة الكرام اثناء موسم احتفالات عيد الشهيد العظيم مارجرجس </p>
+      <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+      </div> -->
+    </div>
+  </div>  
+</div>
+
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row gx-4 gx-lg-5 justify-content-center">
+    <div class="col-10 col-sm-8 col-lg-6">
+      <!-- Post preview-->
+      <!-- {% for post in all_posts %}
+      <div class="post-preview">
+        <a href="{{ url_for('show_post', post_id=post.id) }}">
+          <h2 class="post-title">{{ post.title }}</h2>
+          <h3 class="post-subtitle">{{ post.subtitle }}</h3>
+        </a>
+        <p class="post-meta">
+          Posted by
+          <a href="#">{{post.author}}</a>
+          on {{post.date}}
+
+          {% if current_user.id == 1 %} -->
+          <!-- TODO: Only show delete button if user id is 1 (admin user) -->
+          <!-- <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a> -->
+          <!-- {% endif %}
+        </p>
+      </div>
+      <!-- Divider -->
+      <!-- <hr class="my-4" /> -->
+      <!-- {% endfor %}  -->
+
+      <!-- New Post -->
+      <!-- TODO: Only show Create Post button if user id is 1 (admin user) -->
+      <!-- {% if current_user.id == 1 %}
+      <div class="d-flex justify-content-end mb-4">
+        <a
+          class="btn btn-primary float-right"
+          href="{{url_for('add_new_post')}}"
+          >Create New Post</a
+        >
+      </div>
+      {% endif %} -->
+      <!-- Pager-->
+      <h1 class="lead">يمكنكم تقديم طلب لحجز غرفة في مبيت الدير عبر الضغط علي الرابط التالي </h1>
+      <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+      </div> -->
+    </div>
+       {%if status == "1" %}
+         {%if current_user.is_authenticated%}
+          <div class="d-flex justify-content-end mb-4">
+            <a class="btn btn-secondary text-uppercase" href="{{url_for('booking')}}">اضغط هنا للحجز  →</a>
+          </div>
+          {%else%}
+          <div class="d-flex justify-content-end mb-4">
+            <a class="btn btn-secondary text-uppercase" href="{{url_for('login')}}">اضغط هنا للحجز  →</a>
+          </div>
+         {%endif%} 
+      {%else%}
+      <div class="d-flex justify-content-end mb-4">
+        <h2>باب الحجز مغلق</h2>
+      </div>
+      {%endif%}
+    </div>
+  </div>
+</div>
+
+<div class="container col-xxl-8 px-4 py-5">
+  <div class="row p-4 pb-0 pe-lg-0 pt-lg-5 align-items-center rounded-3 border shadow-lg">
+    <div class="col-lg-7 p-3 p-lg-5 pt-lg-3">
+      <h1 class="display-4 fw-bold lh-1 text-body-emphasis">عنوان الدير </h1>
+      <p class="lead"> يقع الدير علي بعد 18 كيلو متر جنوب مدينة قنا بالقرب من قرية المحروسة و شمال مدينة نقادة </p>
+      <!-- <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4 mb-lg-3">
+        <button type="button" class="btn btn-primary btn-lg px-4 me-md-2 fw-bold">Primary</button>
+        <button type="button" class="btn btn-outline-secondary btn-lg px-4">Default</button>
+      </div> -->
+    </div>
+    <div class="col-lg-4 offset-lg-1 p-0 overflow-hidden shadow-lg">
+        <img class="rounded-lg-3" src="../static/assets/img/home2.jpg" alt="" width="720">
+    </div>
+  </div>
+</div>
+
+{% include "footer.html" %}
