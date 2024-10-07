@@ -31,7 +31,7 @@ This will install the packages from the requirements.txt for this project.
 '''
 admin = False
 app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b' #os.environ.get('FLASK_KEY') 
+app.config['SECRET_KEY'] = os.environ.get('FLASK_KEY') #'8BYkEfBA6O6donzWlSihBXox7C0sKR6b' #os.environ.get('FLASK_KEY') 
 ckeditor = CKEditor(app)
 ckeditor.autoParagraph = False
 ckeditor.enterMode = 2
@@ -52,7 +52,7 @@ gravatar = Gravatar(app,
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db' #os.environ.get("DB_URI", "sqlite:///posts.db") 
+app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get("DB_URI", "sqlite:///posts.db") #'sqlite:///posts.db' #os.environ.get("DB_URI", "sqlite:///posts.db") 
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -386,4 +386,4 @@ def contact():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5002)
+    app.run(debug=False, port=5002)
