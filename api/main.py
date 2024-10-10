@@ -204,7 +204,7 @@ def admin_only():
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
-            if admin == False:
+            if current_user.id != 1:    #admin == False:
                 abort(403)
             return f(*args, **kwargs)
         return decorated_function
@@ -240,23 +240,23 @@ def get_all_posts():
 
 
 # TODO: Allow logged-in users to comment on posts
-@app.route("/post/<int:post_id>", methods=["GET", "POST"])
-def show_post(post_id):
-    form = CommentPostForm()
-    requested_post = db.get_or_404(BlogPost, post_id)
-    post_comments = db.session.execute(db.select(Comment).where(Comment.blog_post_id == post_id)).scalars()
-    if form.validate_on_submit():
-        new_comment = Comment(
-            text=form.body.data,
-            user_id=current_user.id,
-            blog_post_id=requested_post.id
-        )
-        db.session.add(new_comment)
-        db.session.commit()
-        #return redirect(url_for('get_all_posts'))
-        return redirect(url_for('show_post', post_id=post_id))
+# @app.route("/post/<int:post_id>", methods=["GET", "POST"])
+# def show_post(post_id):
+#     form = CommentPostForm()
+#     requested_post = db.get_or_404(BlogPost, post_id)
+#     post_comments = db.session.execute(db.select(Comment).where(Comment.blog_post_id == post_id)).scalars()
+#     if form.validate_on_submit():
+#         new_comment = Comment(
+#             text=form.body.data,
+#             user_id=current_user.id,
+#             blog_post_id=requested_post.id
+#         )
+#         db.session.add(new_comment)
+#         db.session.commit()
+#         #return redirect(url_for('get_all_posts'))
+#         return redirect(url_for('show_post', post_id=post_id))
 
-    return render_template("post.html", post=requested_post, form=form, comments=post_comments)
+#     return render_template("post.html", post=requested_post, form=form, comments=post_comments)
 
 
 # TODO: Use a decorator so only an admin user can create a new post
