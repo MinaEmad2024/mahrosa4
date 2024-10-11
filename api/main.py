@@ -348,7 +348,7 @@ def booking():
             )
             db.session.add(new_reservation)
             db.session.commit()
-            return "<h1>تم استقبال طلب الحجز بنجاح و سيتم التواصل تليفونيا  معكم لتاكيد الحجز قريبا</h1> <h2>ليتم تحويلكم للصفحة الرئيسية </h2> <a style='color: red;' href='http://127.0.0.1:5002/'>اضغط هنا</a>"
+            return "<h1>تم استقبال طلب الحجز بنجاح و سيتم التواصل تليفونيا  معكم لتاكيد الحجز قريبا</h1> <h2>ليتم تحويلكم للصفحة الرئيسية </h2> <a style='color: red;' href='https://st-george-mahrosa.vercel.app/'>اضغط هنا</a>"
 
 
         return render_template("booking.html", form=booking_form)
