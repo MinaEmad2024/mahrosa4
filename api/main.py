@@ -13,7 +13,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import smtplib
 import pip._vendor.requests
-import pandas
 import flask_excel as excel
 
 
