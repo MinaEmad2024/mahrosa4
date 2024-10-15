@@ -394,8 +394,11 @@ def download_excel():
     result = db.session.execute(db.select(Reservation))
     reservations = result.scalars().all()
     column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
-    return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-
+    #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
+    workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
+    worksheet = workbook.sheet1
+    worksheet.add_table('A1:I')
+    return workbook
 
 
 
