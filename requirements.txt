@@ -11,4 +11,4 @@ SQLAlchemy==2.0.25
 gunicorn==21.2.0
 psycopg2-binary==2.9.9
 Flask-Excel==0.0.7
-pyexcel-xlsx-0.6.0
+pyexcel-xlsx==0.6.0
