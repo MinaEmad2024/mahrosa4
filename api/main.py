@@ -13,6 +13,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 import os
 import smtplib
 import pip._vendor.requests
+import pandas
+import flask_excel as excel
+
 
 # Import your forms from the forms.py
 from api.forms import CreatePostForm,RegisterUser,LoginUser,CommentPostForm,Booking,OpenResevation
@@ -52,7 +55,7 @@ gravatar = Gravatar(app,
 # CREATE DATABASE
 class Base(DeclarativeBase):
     pass
-app.config['SQLALCHEMY_DATABASE_URI'] =  os.environ.get("DB_URI", "sqlite:///posts.db") #'sqlite:///posts.db' #os.environ.get("DB_URI", "sqlite:///posts.db") 
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DB_URI", "sqlite:///posts.db") #'sqlite:///posts.db' #os.environ.get("DB_URI", "sqlite:///posts.db") 
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
@@ -124,6 +127,7 @@ class Status_Of_Reservation(db.Model):
 #         id: Mapped[int] = mapped_column(Integer, primary_key=True)
 #         user.id
 
+excel.init_excel(app) # required since version 0.0.7
 
 with app.app_context():
     db.create_all()
@@ -385,5 +389,16 @@ def contact():
     return render_template("contact.html", msg_sent=False)
 
 
+
+@app.route("/download_excel", methods=['GET', 'POST'])
+def download_excel():
+    result = db.session.execute(db.select(Reservation))
+    reservations = result.scalars().all()
+    column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
+    return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
+
+
+
+
 if __name__ == "__main__":
-    app.run(debug=False, port=5002)
+    app.run(debug=[False], port=5002)
