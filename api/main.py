@@ -398,7 +398,7 @@ def download_excel():
     #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
     workbook = xlsxwriter.Workbook('reservations.xlsx')
     worksheet = workbook.add_worksheet()
-    worksheet.add_table('A1:I', {'data':reservations, 'columns': [{'header': 'id'},
+    worksheet.add_table('A1:I100000', {'data':reservations, 'columns': [{'header': 'id'},
                                           {'header': 'name'},
                                           {'header': 'phone'},
                                           {'header': 'room'},
