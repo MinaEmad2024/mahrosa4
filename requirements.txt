@@ -13,3 +13,5 @@ psycopg2-binary==2.9.9
 Flask-Excel==0.0.7
 pyexcel-xlsx==0.6.0
 XlsxWriter==3.2.0
+pandas==2.2.3
+numpy==2.1.2

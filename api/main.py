@@ -415,10 +415,10 @@ def download_excel():
                                           {'header': 'season'},
                                           {'header': 'user_id'},
                                           ]})
-    workbook.close()
-    # file_stream = BytesIO()
-    # workbook.save(file_stream)
-    # file_stream.seek(0)
+    #workbook.close()
+    file_stream = BytesIO()
+    workbook.save(file_stream)
+    file_stream.seek(0)
     #workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
     return send_file(attachment_filename="reservtations.xlsx", as_attachment=True)
 
