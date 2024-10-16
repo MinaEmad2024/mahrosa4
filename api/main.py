@@ -427,7 +427,7 @@ def download_excel():
     # workbook.save(file_stream)
     # file_stream.seek(0)
     #workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    return send_file(output, attachment_filename="reservtations.xlsx", as_attachment=True)
+    return send_file(output, download_name="reservtations.xlsx", as_attachment=True)
 
 
 
