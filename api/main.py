@@ -392,6 +392,7 @@ def contact():
 
 
 @app.route("/download_excel", methods=['GET', 'POST'])
+@admin_only()
 def download_excel():
     items = []
     result = db.session.execute(db.select(Reservation))
