@@ -16,6 +16,8 @@ import pip._vendor.requests
 import flask_excel as excel
 import xlsxwriter
 from io import BytesIO
+import numpy as np
+import pandas as pd
 
 
 # Import your forms from the forms.py
@@ -394,6 +396,8 @@ def contact():
 @app.route("/download_excel", methods=['GET', 'POST'])
 @admin_only()
 def download_excel():
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter')
     items = []
     result = db.session.execute(db.select(Reservation))
     reservations = result.scalars().all()
@@ -416,11 +420,14 @@ def download_excel():
                                           {'header': 'user_id'},
                                           ]})
     #workbook.close()
-    file_stream = BytesIO()
-    workbook.save(file_stream)
-    file_stream.seek(0)
+    writer.close()
+
+    output.seek(0)
+    # file_stream = BytesIO()
+    # workbook.save(file_stream)
+    # file_stream.seek(0)
     #workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    return send_file(attachment_filename="reservtations.xlsx", as_attachment=True)
+    return send_file(output, attachment_filename="reservtations.xlsx", as_attachment=True)
 
 
 
