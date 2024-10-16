@@ -392,13 +392,18 @@ def contact():
 
 @app.route("/download_excel", methods=['GET', 'POST'])
 def download_excel():
+    items = []
     result = db.session.execute(db.select(Reservation))
     reservations = result.scalars().all()
+    for reservation in reservations:
+        reservation = [reservation.id, reservation.name, reservation.phone, reservation.room, reservation.from_date, reservation.to_date, reservation.date, reservation.season, reservation.user_id]
+        items.append(reservation)
     #column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
     #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
     workbook = xlsxwriter.Workbook('reservations.xlsx')
     worksheet = workbook.add_worksheet()
-    worksheet.add_table('A1:I100000', {'data':reservations, 'columns': [{'header': 'id'},
+    worksheet.add_table('A1:I100000', {'data':items, 'columns': 
+                                         [{'header': 'id'},
                                           {'header': 'name'},
                                           {'header': 'phone'},
                                           {'header': 'room'},
