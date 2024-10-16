@@ -412,7 +412,7 @@ def download_excel():
     df.to_excel(writer, startrow = 0, merge_cells = False, sheet_name = "Sheet_1")
     workbook = writer.book
     worksheet = writer.sheets["Sheet_1"]
-    worksheet.add_table('A1:j700000', {'data':df, 'style': 'Table Style Light 17','header_row': False})
+    worksheet.add_table('A1:j710', {'data':df, 'style': 'Table Style Light 17','header_row': False})
     format = workbook.add_format()
     format.set_bg_color('#eeeeee')
     worksheet.set_column(0,9,28)
