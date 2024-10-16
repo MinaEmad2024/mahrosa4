@@ -1,6 +1,6 @@
 from datetime import date
 import werkzeug
-from flask import Flask, abort, render_template, redirect, url_for, flash, request
+from flask import Flask, abort, render_template, redirect, url_for, flash, request, send_file
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
@@ -15,6 +15,7 @@ import smtplib
 import pip._vendor.requests
 import flask_excel as excel
 import xlsxwriter
+from io import BytesIO
 
 
 # Import your forms from the forms.py
@@ -413,8 +414,12 @@ def download_excel():
                                           {'header': 'season'},
                                           {'header': 'user_id'},
                                           ]})
+    workbook.close()
+    file_stream = BytesIO()
+    workbook.save(file_stream)
+    file_stream.seek(0)
     #workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    return workbook
+    return send_file(file_stream, attachment_filename="reservtations.xlsx", as_attachment=True)
 
 
 
