@@ -14,6 +14,7 @@ import os
 import smtplib
 import pip._vendor.requests
 import flask_excel as excel
+import xlsxwriter
 
 
 # Import your forms from the forms.py
@@ -393,11 +394,21 @@ def contact():
 def download_excel():
     result = db.session.execute(db.select(Reservation))
     reservations = result.scalars().all()
-    column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
+    #column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
     #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    worksheet = workbook.worksheet1()
-    worksheet.add_table('A1:I')
+    workbook = xlsxwriter.Workbook('reservations.xlsx')
+    worksheet = workbook.add_worksheet()
+    worksheet.add_table('A1:I', {'data':reservations, 'columns': [{'header': 'id'},
+                                          {'header': 'name'},
+                                          {'header': 'phone'},
+                                          {'header': 'room'},
+                                          {'header': 'from_date'},
+                                          {'header': 'to_date'},
+                                          {'header': 'date'},
+                                          {'header': 'season'},
+                                          {'header': 'user_id'},
+                                          ]})
+    #workbook = excel.make_response_from_query_sets(reservations, column_names, "xlsx")
     return workbook
 
 
