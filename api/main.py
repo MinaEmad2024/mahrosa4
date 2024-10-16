@@ -404,25 +404,42 @@ def download_excel():
     for reservation in reservations:
         reservation = [reservation.id, reservation.name, reservation.phone, reservation.room, reservation.from_date, reservation.to_date, reservation.date, reservation.season, reservation.user_id]
         items.append(reservation)
-    #column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
-    #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
-    workbook = xlsxwriter.Workbook('reservations.xlsx')
-    worksheet = workbook.add_worksheet()
-    worksheet.add_table('A1:I100000', {'data':items, 'columns': 
-                                         [{'header': 'id'},
-                                          {'header': 'name'},
-                                          {'header': 'phone'},
-                                          {'header': 'room'},
-                                          {'header': 'from_date'},
-                                          {'header': 'to_date'},
-                                          {'header': 'date'},
-                                          {'header': 'season'},
-                                          {'header': 'user_id'},
-                                          ]})
-    #workbook.close()
+    df = pd.DataFrame(items, columns=['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id'  ])   
+    print(df)
+
+    output = BytesIO()
+    writer = pd.ExcelWriter(output, engine='xlsxwriter') 
+    df.to_excel(writer, startrow = 0, merge_cells = False, sheet_name = "Sheet_1")
+    workbook = writer.book
+    worksheet = writer.sheets["Sheet_1"]
+    format = workbook.add_format()
+    format.set_bg_color('#eeeeee')
+    worksheet.set_column(0,9,28)
+
+    #the writer has done its job
     writer.close()
 
+    #go back to the beginning of the stream
     output.seek(0)
+    #column_names = ['id', 'name', 'phone', 'room', 'from_date', 'to_date', 'date', 'season', 'user_id']
+    #return excel.make_response_from_query_sets(reservations, column_names, "xlsx")
+    # workbook = xlsxwriter.Workbook('reservations.xlsx')
+    # worksheet = workbook.add_worksheet()
+    # worksheet.add_table('A1:I100000', {'data':items, 'columns': 
+    #                                      [{'header': 'id'},
+    #                                       {'header': 'name'},
+    #                                       {'header': 'phone'},
+    #                                       {'header': 'room'},
+    #                                       {'header': 'from_date'},
+    #                                       {'header': 'to_date'},
+    #                                       {'header': 'date'},
+    #                                       {'header': 'season'},
+    #                                       {'header': 'user_id'},
+    #                                       ]})
+    #workbook.close()
+    # writer.close()
+
+    # output.seek(0)
     # file_stream = BytesIO()
     # workbook.save(file_stream)
     # file_stream.seek(0)
